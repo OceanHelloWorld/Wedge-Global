@@ -22,3 +22,7 @@ Using Twitter's Twython API: https://twython.readthedocs.io/en/latest/
 Receive a tweet when a the yokohama is out of sight, then the operator will go check.
 
 
+
+## Background Information
+Based on the average sun rise and set time of the island, it will be too dark for us to monitor from 7:00 pm to 7:30 am. However, only 11pm to 5am is high tide that we need to worry about. In this period, 4am to 8am has the highest waves being the most dangerous point of the day.
+http://www.tides4fishing.com/es/islas-canarias/las-palmas-de-gran-canaria
