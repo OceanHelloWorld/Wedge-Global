@@ -4,6 +4,7 @@ Codes are for private company use.
 
 ## Video Input Device
 Raspberry Pi Camera
+https://www.raspberrypi.org/documentation/hardware/camera/README.md
 
 ## Microprocessor before transmission
 Raspberry Pi
