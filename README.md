@@ -7,7 +7,7 @@ Raspberry Pi Camera
 
 ## Microprocessor before transmission
 Raspberry Pi
-Powered by?
+Powered: 5V, 2.5A
 Using OpenCV and Python code to send a signal to the communication device when the yokohama is not in sight.
 
 ## Communication
