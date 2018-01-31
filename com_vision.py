@@ -7,17 +7,13 @@ import argparse
 import imutils
 import cv2
 import sys
-
 PY3 = sys.version_info[0] == 3
 if PY3:
     xrange = range
 # !!! need to be deleted
-ap = argparse.ArgumentParser()
-ap.add_argument("-v", "--video",
-    help="path to the (optional) video file")
-ap.add_argument("-b", "--buffer", type=int, default=64,
-    help="max buffer size")
-args = vars(ap.parse_args())
+
+def midpoint(ptA, ptB):
+	return ((ptA[0] + ptB[0]) * 0.5, (ptA[1] + ptB[1]) * 0.5)
 
 # lower and upper boundaries of colors
 # yoko is red in HSV, dock is blue in HSV
@@ -25,37 +21,37 @@ yokoLower = (140, 100, 100)
 yokoUpper = (180, 255, 255)
 dockLower = (60, 100, 100)
 dockUpper = (120, 255, 255)
-# pts = deque(maxlen=args["buffer"])
 
 # count
 yoko_error_counter = 0;
 dock_error_counter = 0;
 
-def midpoint(ptA, ptB):
-	return ((ptA[0] + ptB[0]) * 0.5, (ptA[1] + ptB[1]) * 0.5)
-
-# if a video path was not supplied, grab the reference
-# to the webcam
-if not args.get("video", False):
-    camera = cv2.VideoCapture(0)
-
-# otherwise, grab a reference to the video file
-else:
-    camera = cv2.VideoCapture(args["video"])
+# get camera footage
+camera = cv2.VideoCapture(0)
 
 # keep looping
 while True:
     # grab the current frame
     (grabbed, frame) = camera.read()
 
-    # if we are viewing a video and we did not grab a frame,
-    # then we have reached the end of the video
-    if args.get("video") and not grabbed:
-        break
-
     # resize the frame, blur it, and convert it to the HSV
     # color space
     frame = imutils.resize(frame, width=600)
+
+    # check if the footage is too dark
+    # stop the camera if too dark
+    gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+    hist = cv2.calcHist([gray], [0], None, [50], [0, 256])
+    histo_sum = 0
+    for i in range (0, 49):
+    	histo_sum += 2 * i * hist[i]
+    	i+=1
+    print(histo_sum)
+    if histo_sum > 2000000:
+    	print("system is on")
+    else:
+    	print("system is offfff")
+
     # blurred = cv2.GaussianBlur(frame, (11, 11), 0)
     hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
 
@@ -79,6 +75,8 @@ while True:
 
     center_yoko = None
     center_dock = None
+    radius_yoko = 0
+    radius_dock = 0
     # only proceed if at least one contour was found
     if len(cnts_yoko) > 0:
         # find the largest contour in the mask_yoko, then use
@@ -136,22 +134,6 @@ while True:
                 print("Yoko is out, contact the supervisor")
             sleep(0.1)
 
-    # update the points queue
-    # pts.appendleft(center_yoko)
-    # pts.appendleft(center_dock)
-    # ???
-    # loop over the set of tracked points
-    '''
-    for i in xrange(1, len(pts)):
-        # if either of the tracked points are None, ignore
-        # them
-        if pts[i - 1] is None or pts[i] is None:
-            continue
-        # otherwise, compute the thickness of the line and
-        # draw the connecting lines
-        thickness = int(np.sqrt(args["buffer"] / float(i + 1)) * 2.5)
-        cv2.line(frame, pts[i - 1], pts[i], (0, 0, 255), thickness)
-    '''
     # show the frame to our screen
     cv2.imshow("Frame", frame)
     key = cv2.waitKey(1) & 0xFF
