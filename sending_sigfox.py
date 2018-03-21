@@ -71,6 +71,7 @@ ser = serial.Serial(
 	parity=serial.PARITY_NONE,
 	stopbits=serial.STOPBITS_ONE,
 	bytesize=serial.EIGHTBITS
+	print "serial testing debug"
 )
 
 if ser.isOpen() : # on some platforms the serial port needs to be closed first
