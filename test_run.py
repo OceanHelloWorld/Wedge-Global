@@ -204,48 +204,48 @@ while True:
                 cv2.putText(frame, "{:.1f}centimeters".format(distance), (int(x_middle), int(y_middle - 10)),cv2.FONT_HERSHEY_SIMPLEX, 0.55, (100, 200, 20), 2)
         else:
             dock_error_counter += 1
-            print("dock out", dock_error_counter)
+            print "dock out", dock_error_counter
             if dock_error_counter > 20 and yoko_error_counter > 20:
               
               # sending the message
               ser.write('AT\r')
               # if the message is not blank, then print Modem is OK
               if WaitFor(ser, 'OK', 'ERROR', 3) :
-                print('SigFox Modem OK')
+                print 'SigFox Modem OK'
               else:
-                print('SigFox Modem Init Error')
+                print 'SigFox Modem Init Error'
                 ser.close()
                 exit()
 
               ser.write('ATE0\r')
               if WaitFor(ser, 'OK', 'ERROR', 3) :
-                print('SigFox Modem echo OFF')
+                print 'SigFox Modem echo OFF'
               else:
-                print('SigFox Modem Configuration Error')
+                print 'SigFox Modem Configuration Error'
                 ser.close()
                 exit()
 
               ser.write("AT$SF={0},2,1\r".format(sys.argv[1]))
-              print('Sending ...')
+              print 'Sending ...'
               if WaitFor(ser, 'OK', 'ERROR', 25) :
-                print('Message sent')
+                print 'Message sent'
               else:
-                print('Error sending message')
+                print 'Error sending message'
                 ser.close()
                 exit()
 
               if WaitFor(ser, 'BEGIN', 'ERROR', 25) :
-                print('Waiting for answer')
+                print 'Waiting for answer'
               else:
-                print('Error waiting for answer')
+                print 'Error waiting for answer'
                 ser.close()
                 exit()
 
               rxData = ReceiveUntil(ser, 'END', 'ERROR', 25)
               if rxData != '' :
-                print('Answer received')
+                print 'Answer received'
               else:
-                print('Error receiving answer')
+                print 'Error receiving answer'
                 ser.close()
                 exit()
 
