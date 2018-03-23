@@ -26,3 +26,35 @@ Receive a tweet when a the yokohama is out of sight, then the operator will go c
 ## Background Information
 Based on the average sun rise and set time of the island, it will be too dark for us to monitor from 7:00 pm to 7:30 am. However, only 11pm to 5am is high tide that we need to worry about. In this period, 4am to 8am has the highest waves being the most dangerous point of the day.
 http://www.tides4fishing.com/es/islas-canarias/las-palmas-de-gran-canaria
+
+## Step 1
+load raspberry pi with Raspbian image
+
+## Step 2
+Install Git on Raspberry Pi
+https://projects.raspberrypi.org/en/projects/getting-started-with-git/4
+
+## Step 3
+git clone https://github.com/OceanHelloWorld/Wedge-Global.git
+
+## Step 4
+Follow Sigfox instruciton
+https://github.com/SNOC/rpisigfox
+
+## Step 5
+Follow OpenCV install instruction
+https://resources.sigfox.com/document/errorwarning-status-events-api-endpoints-explanation
+
+## Step 6
+Register the SigFox portal
+https://backend.sigfox.com/cms/section/52f8a5b593368ce020b924e1/info
+
+## Step 7
+Setup Callbacks or other API funcitons
+https://resources.sigfox.com/document/errorwarning-status-events-api-endpoints-explanation
+
+## Step 8
+Run the code from Wedge-Global repo
+
+
+
